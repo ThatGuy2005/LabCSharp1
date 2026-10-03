@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+            activatedThread?.Join();
             base.Dispose(disposing);
         }
 

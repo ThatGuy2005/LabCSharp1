@@ -27,9 +27,20 @@ namespace LabCSharp1
             
             for (int i = 0; i <= 100; i++)
             {
-                
-                bar.Value = i;
+                updateProgressBar(i);
                 System.Threading.Thread.Sleep(50);
+            }
+        }
+
+        private void updateProgressBar(int value)
+        {
+            if (bar.InvokeRequired)
+            {
+                bar.Invoke(new Action<int>(updateProgressBar), value);
+            }
+            else
+            {
+                bar.Value = value;
             }
         }
 
