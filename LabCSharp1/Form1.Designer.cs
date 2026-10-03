@@ -92,6 +92,7 @@
             this.fontColor.TabIndex = 5;
             this.fontColor.Text = "Set Font Color";
             this.fontColor.UseVisualStyleBackColor = true;
+            this.fontColor.Click += new System.EventHandler(this.fontColor_Click);
             // 
             // Form1
             // 

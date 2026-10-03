@@ -48,7 +48,7 @@ namespace LabCSharp1
         {
             if (bar.InvokeRequired)
             {
-                bar.Invoke(new Action<int>(updateProgressBar), value);
+                bar.BeginInvoke(new Action<int>(updateProgressBar), value);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace LabCSharp1
             Random rand = new Random();
             if (mover.InvokeRequired)
             {
-                mover.Invoke(new Action(updateMoverPosition));
+                mover.BeginInvoke(new Action(updateMoverPosition));
             }
             else
             {
@@ -85,6 +85,19 @@ namespace LabCSharp1
             if(colorDialog.ShowDialog() == DialogResult.OK)
             {
                 this.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void fontColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = false;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = this.BackColor;
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                mover.ForeColor = colorDialog.Color;
             }
         }
     }
