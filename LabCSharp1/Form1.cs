@@ -16,9 +16,8 @@ namespace LabCSharp1
         public Form1()
         {
             InitializeComponent();
-            logFile = new FileStream("log.txt", FileMode.Append);
-            logListener = new TextWriterTraceListener(logFile);
-            Trace.Listeners.Add(logListener);
+            Trace.Listeners.Clear();    
+            Trace.Listeners.Add(new TextWriterTraceListener("log.txt"));
             Trace.AutoFlush = true;
         }
 
@@ -64,7 +63,6 @@ namespace LabCSharp1
 
         private void updateMoverPosition()
         {
-            Trace.WriteLine("Updating mover position");
             Random rand = new Random();
             if (mover.InvokeRequired)
             {
@@ -72,6 +70,9 @@ namespace LabCSharp1
             }
             else
             {
+                
+                
+                Trace.WriteLine($"[{DateTime.Now}]Updating mover position");
                 mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
