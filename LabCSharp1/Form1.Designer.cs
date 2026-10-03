@@ -1,4 +1,7 @@
-﻿namespace LabCSharp1
+﻿using System.Diagnostics;
+using System.IO;
+
+namespace LabCSharp1
 {
     partial class Form1
     {
@@ -124,6 +127,9 @@
         private System.Windows.Forms.Label mover;
         private System.Windows.Forms.Button backgroundColor;
         private System.Windows.Forms.Button fontColor;
+
+        private FileStream logFile;
+        private TextWriterTraceListener logListener;
     }
 }
 

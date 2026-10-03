@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LabCSharp1
 {
@@ -14,6 +16,10 @@ namespace LabCSharp1
         public Form1()
         {
             InitializeComponent();
+            logFile = new FileStream("log.txt", FileMode.Append);
+            logListener = new TextWriterTraceListener(logFile);
+            Trace.Listeners.Add(logListener);
+            Trace.AutoFlush = true;
         }
 
         private void start_Click(object sender, EventArgs e)
@@ -58,6 +64,7 @@ namespace LabCSharp1
 
         private void updateMoverPosition()
         {
+            Trace.WriteLine("Updating mover position");
             Random rand = new Random();
             if (mover.InvokeRequired)
             {
