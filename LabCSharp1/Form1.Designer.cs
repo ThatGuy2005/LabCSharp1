@@ -17,7 +17,8 @@
             {
                 components.Dispose();
             }
-            activatedThread?.Join();
+            activatedThreadForBar?.Abort();
+            activatedThreadForText?.Abort();
             base.Dispose(disposing);
         }
 
@@ -32,6 +33,9 @@
             this.start = new System.Windows.Forms.Button();
             this.stop = new System.Windows.Forms.Button();
             this.bar = new System.Windows.Forms.ProgressBar();
+            this.mover = new System.Windows.Forms.Label();
+            this.backgroundColor = new System.Windows.Forms.Button();
+            this.fontColor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // start
@@ -61,17 +65,49 @@
             this.bar.Size = new System.Drawing.Size(335, 23);
             this.bar.TabIndex = 2;
             // 
+            // mover
+            // 
+            this.mover.AutoSize = true;
+            this.mover.Location = new System.Drawing.Point(597, 391);
+            this.mover.Name = "mover";
+            this.mover.Size = new System.Drawing.Size(113, 20);
+            this.mover.TabIndex = 3;
+            this.mover.Text = "I like to move it";
+            // 
+            // backgroundColor
+            // 
+            this.backgroundColor.Location = new System.Drawing.Point(577, 99);
+            this.backgroundColor.Name = "backgroundColor";
+            this.backgroundColor.Size = new System.Drawing.Size(120, 80);
+            this.backgroundColor.TabIndex = 4;
+            this.backgroundColor.Text = "Set Background Color";
+            this.backgroundColor.UseVisualStyleBackColor = true;
+            this.backgroundColor.Click += new System.EventHandler(this.backgroundColor_Click);
+            // 
+            // fontColor
+            // 
+            this.fontColor.Location = new System.Drawing.Point(587, 220);
+            this.fontColor.Name = "fontColor";
+            this.fontColor.Size = new System.Drawing.Size(96, 65);
+            this.fontColor.TabIndex = 5;
+            this.fontColor.Text = "Set Font Color";
+            this.fontColor.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.fontColor);
+            this.Controls.Add(this.backgroundColor);
+            this.Controls.Add(this.mover);
             this.Controls.Add(this.bar);
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -80,8 +116,13 @@
         private System.Windows.Forms.Button start;
         private System.Windows.Forms.Button stop;
 
-        private System.Threading.Thread activatedThread;
+        private System.Threading.Thread activatedThreadForBar;
+
+        private System.Threading.Thread activatedThreadForText;
         private System.Windows.Forms.ProgressBar bar;
+        private System.Windows.Forms.Label mover;
+        private System.Windows.Forms.Button backgroundColor;
+        private System.Windows.Forms.Button fontColor;
     }
 }
 

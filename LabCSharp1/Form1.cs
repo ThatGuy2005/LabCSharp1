@@ -18,16 +18,28 @@ namespace LabCSharp1
 
         private void start_Click(object sender, EventArgs e)
         {
-            activatedThread = new System.Threading.Thread(run);
-            activatedThread.Start();
+            activatedThreadForBar = new System.Threading.Thread(runBar);
+            activatedThreadForBar.Start();
+            activatedThreadForText = new System.Threading.Thread(runText);
+            activatedThreadForText.Start();
         }
 
-        private void run()
+        private void runText()
+        {
+            while (true)
+            {
+                updateMoverPosition();
+                System.Threading.Thread.Sleep(100);
+            }
+        }
+
+        private void runBar()
         {
             
             for (int i = 0; i <= 100; i++)
             {
                 updateProgressBar(i);
+                updateMoverPosition();
                 System.Threading.Thread.Sleep(50);
             }
         }
@@ -44,9 +56,36 @@ namespace LabCSharp1
             }
         }
 
+        private void updateMoverPosition()
+        {
+            Random rand = new Random();
+            if (mover.InvokeRequired)
+            {
+                mover.Invoke(new Action(updateMoverPosition));
+            }
+            else
+            {
+                mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
+            }
+        }
+
         private void stop_Click(object sender, EventArgs e)
         {
-            activatedThread.Join();
+            activatedThreadForBar?.Abort();
+            activatedThreadForText?.Abort();
+        }
+
+        private void backgroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = false;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = this.BackColor;
+
+            if(colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.BackColor = colorDialog.Color;
+            }
         }
     }
 }
