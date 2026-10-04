@@ -129,7 +129,7 @@ namespace LabCSharp1
         private System.Windows.Forms.Button fontColor;
         private FileStream logFile;
         private TextWriterTraceListener logListener;
-        private static BooleanSwitch logSwitch = new BooleanSwitch("logSwitch", "Log Switch");
+        
     }
 }
 
