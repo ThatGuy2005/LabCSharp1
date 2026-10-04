@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace LabCSharp1
 {
@@ -70,9 +72,11 @@ namespace LabCSharp1
             }
             else
             {
-                
-                
-                Trace.WriteLine($"[{DateTime.Now}]Updating mover position");
+
+                if (logSwitch.Enabled)
+                {
+                    Trace.WriteLine($"[{DateTime.Now}]Updating mover position");
+                }
                 mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
