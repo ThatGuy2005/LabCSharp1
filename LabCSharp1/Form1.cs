@@ -51,7 +51,7 @@ namespace LabCSharp1
             }
         }
 
-        private void updateProgressBar(int value)
+        public void updateProgressBar(int value)
         {
             if (bar.InvokeRequired)
             {
@@ -63,12 +63,12 @@ namespace LabCSharp1
             }
         }
 
-        private void updateMoverPosition()
+        public void updateMoverPosition()
         {
             Random rand = new Random();
             if (mover.InvokeRequired)
             {
-                mover.BeginInvoke(new Action(updateMoverPosition));
+                mover.BeginInvoke(new Action(updateMoverPosition), mover);
             }
             else
             {

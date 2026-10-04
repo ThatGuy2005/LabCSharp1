@@ -39,8 +39,46 @@ namespace LabCSharp1
             });
             myThread.Start();
         }
+        public MyThread(Action updateMover)
+        {
+            this.updateMoverPosition = updateMover;
+            myThread = new Thread(runTextCallback);
+            myThread.Start();
+        }
+        public MyThread(Action<int> updateProgressBar)
+        {
+            this.updateProgressBar = updateProgressBar;
+            myThread = new Thread(runBarCallback);
+            myThread.Start();
+        }
 
         private void runText()
+        {
+            while (true)
+            {   
+                mainForm.updateMoverPosition();
+                System.Threading.Thread.Sleep(100);
+            }
+        }
+
+        private void runBar()
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                mainForm.updateProgressBar(i);
+                System.Threading.Thread.Sleep(50);
+            }
+        }
+        private void runBarCallback()
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                updateProgressBar(i);
+                System.Threading.Thread.Sleep(50);
+            }
+        }
+
+        private void runTextCallback()
         {
             while (true)
             {
@@ -49,54 +87,16 @@ namespace LabCSharp1
             }
         }
 
-        private void runBar()
-        {
-
-            for (int i = 0; i <= 100; i++)
-            {
-                updateProgressBar(i);
-                System.Threading.Thread.Sleep(50);
-            }
-        }
-        private void updateProgressBar(int value)
-        {
-            if (mainForm.getBar.InvokeRequired)
-            {
-                mainForm.getBar.BeginInvoke(new Action<int>(updateProgressBar), value);
-            }
-            else
-            {
-                mainForm.getBar.Value = value;
-            }
-        }
-
-        private void updateMoverPosition()
-        {
-            Random rand = new Random();
-            if (mainForm.getMover.InvokeRequired)
-            {
-                mainForm.getMover.BeginInvoke(new Action(updateMoverPosition), mainForm.getMover);
-            }
-            else
-            {
-
-                if (logSwitch.Enabled)
-                {
-                    Trace.WriteLine($"[{DateTime.Now}]Updating mover position");
-                }
-                mainForm.getMover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
-            }
-        }
         ~MyThread()
         {
-            if (logSwitch.Enabled)
-            {
-                Trace.WriteLine($"[{DateTime.Now}]Thread destroyed");
-            }
+            
             myThread.Abort();
         }
-        Form1 mainForm;
-        Thread myThread;
-        private static BooleanSwitch logSwitch = new BooleanSwitch("logSwitch", "Log Switch");
+        private Form1 mainForm;
+        private Action<int> updateProgressBar;
+        private Action updateMoverPosition;
+
+        private Thread myThread;
+        
     }
 }
