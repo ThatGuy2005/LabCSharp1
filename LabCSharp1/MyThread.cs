@@ -25,11 +25,11 @@ namespace LabCSharp1
             {
                 if (type == ThreadType.ProgressBarThread)
                 {
-                    runBar();
+                    runBar((ProgressBar)widget);
                 }
                 else if (type == ThreadType.MoverThread)
                 {
-                    runText();
+                    runText((Label)widget);
                 }
             });
         }
@@ -43,13 +43,12 @@ namespace LabCSharp1
             }
         }
 
-        private void runBar()
+        private void runBar(ProgressBar bar)
         {
 
             for (int i = 0; i <= 100; i++)
             {
-                updateProgressBar(i);
-                updateMoverPosition();
+                updateProgressBar(i, bar);
                 System.Threading.Thread.Sleep(50);
             }
         }
