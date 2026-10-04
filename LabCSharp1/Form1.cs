@@ -80,7 +80,8 @@ namespace LabCSharp1
                 mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
-
+        public ProgressBar getBar { get { return this.bar; } }
+        public Label getMover { get { return this.mover; } }
         private void stop_Click(object sender, EventArgs e)
         {
             activatedThreadForBar?.Abort();

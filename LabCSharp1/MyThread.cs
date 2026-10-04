@@ -19,58 +19,63 @@ namespace LabCSharp1
     }
     internal class MyThread
     {
-        public MyThread(ThreadType type, object widget)
+        // The first solution is to pass the Form1 instance
+        // to the MyThread constructor and use it to access the controls.
+        // This way, you can avoid using static
+        // members and still update the UI from the thread.
+        public MyThread(ThreadType type, Form1 form)
         {
+            mainForm = form;
             myThread = new Thread(() =>
             {
                 if (type == ThreadType.ProgressBarThread)
                 {
-                    runBar((ProgressBar)widget);
+                    runBar();
                 }
                 else if (type == ThreadType.MoverThread)
                 {
-                    runText((Label)widget);
+                    runText();
                 }
             });
             myThread.Start();
         }
 
-        private void runText(Label text)
+        private void runText()
         {
             while (true)
             {
-                updateMoverPosition(text);
+                updateMoverPosition();
                 System.Threading.Thread.Sleep(100);
             }
         }
 
-        private void runBar(ProgressBar bar)
+        private void runBar()
         {
 
             for (int i = 0; i <= 100; i++)
             {
-                updateProgressBar(i, bar);
+                updateProgressBar(i);
                 System.Threading.Thread.Sleep(50);
             }
         }
-        private void updateProgressBar(int value, ProgressBar bar)
+        private void updateProgressBar(int value)
         {
-            if (bar.InvokeRequired)
+            if (mainForm.getBar.InvokeRequired)
             {
-                bar.BeginInvoke(new Action<int, ProgressBar>(updateProgressBar), value, bar);
+                mainForm.getBar.BeginInvoke(new Action<int>(updateProgressBar), value);
             }
             else
             {
-                bar.Value = value;
+                mainForm.getBar.Value = value;
             }
         }
 
-        private void updateMoverPosition(Label mover)
+        private void updateMoverPosition()
         {
             Random rand = new Random();
-            if (mover.InvokeRequired)
+            if (mainForm.getMover.InvokeRequired)
             {
-                mover.BeginInvoke(new Action<Label>(updateMoverPosition), mover);
+                mainForm.getMover.BeginInvoke(new Action(updateMoverPosition), mainForm.getMover);
             }
             else
             {
@@ -79,7 +84,7 @@ namespace LabCSharp1
                 {
                     Trace.WriteLine($"[{DateTime.Now}]Updating mover position");
                 }
-                mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
+                mainForm.getMover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
         ~MyThread()
@@ -90,6 +95,7 @@ namespace LabCSharp1
             }
             myThread.Abort();
         }
+        Form1 mainForm;
         Thread myThread;
         private static BooleanSwitch logSwitch = new BooleanSwitch("logSwitch", "Log Switch");
     }
