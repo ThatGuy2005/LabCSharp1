@@ -32,6 +32,7 @@ namespace LabCSharp1
                     runText((Label)widget);
                 }
             });
+            myThread.Start();
         }
 
         private void runText(Label text)
@@ -81,7 +82,14 @@ namespace LabCSharp1
                 mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
-
+        ~MyThread()
+        {
+            if (logSwitch.Enabled)
+            {
+                Trace.WriteLine($"[{DateTime.Now}]Thread destroyed");
+            }
+            myThread.Abort();
+        }
         Thread myThread;
         private static BooleanSwitch logSwitch = new BooleanSwitch("logSwitch", "Log Switch");
     }
