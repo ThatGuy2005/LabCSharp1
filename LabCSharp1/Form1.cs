@@ -25,30 +25,10 @@ namespace LabCSharp1
 
         private void start_Click(object sender, EventArgs e)
         {
-            activatedThreadForBar = new System.Threading.Thread(runBar);
-            activatedThreadForBar.Start();
-            activatedThreadForText = new System.Threading.Thread(runText);
-            activatedThreadForText.Start();
-        }
-
-        private void runText()
-        {
-            while (true)
-            {
-                updateMoverPosition();
-                System.Threading.Thread.Sleep(100);
-            }
-        }
-
-        private void runBar()
-        {
+            activatedThreadForBar = new MyThread(updateProgressBar);
             
-            for (int i = 0; i <= 100; i++)
-            {
-                updateProgressBar(i);
-                updateMoverPosition();
-                System.Threading.Thread.Sleep(50);
-            }
+            activatedThreadForText = new MyThread(updateMoverPosition);
+            
         }
 
         public void updateProgressBar(int value)
@@ -68,7 +48,8 @@ namespace LabCSharp1
             Random rand = new Random();
             if (mover.InvokeRequired)
             {
-                mover.BeginInvoke(new Action(updateMoverPosition), mover);
+                mover.BeginInvoke(new Action(updateMoverPosition));
+                return;
             }
             else
             {

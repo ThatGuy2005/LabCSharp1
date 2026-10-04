@@ -86,10 +86,13 @@ namespace LabCSharp1
                 System.Threading.Thread.Sleep(100);
             }
         }
+        public void Abort()
+        {
+            myThread.Abort();
+        }
 
         ~MyThread()
         {
-            
             myThread.Abort();
         }
         private Form1 mainForm;

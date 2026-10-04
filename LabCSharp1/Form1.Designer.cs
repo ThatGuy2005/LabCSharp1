@@ -120,9 +120,9 @@ namespace LabCSharp1
         private System.Windows.Forms.Button start;
         private System.Windows.Forms.Button stop;
 
-        private System.Threading.Thread activatedThreadForBar;
+        private MyThread activatedThreadForBar;
 
-        private System.Threading.Thread activatedThreadForText;
+        private MyThread activatedThreadForText;
         private System.Windows.Forms.ProgressBar bar;
         private System.Windows.Forms.Label mover;
         private System.Windows.Forms.Button backgroundColor;
