@@ -15,6 +15,9 @@ namespace LabCSharp1
 {
     public partial class Form1 : Form
     {
+        // The second solution is to use static
+        // members for the controls and methods
+        // that need to be accessed from the thread.
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +26,7 @@ namespace LabCSharp1
             Trace.AutoFlush = true;
         }
 
+        // On start create a new Thread
         private void start_Click(object sender, EventArgs e)
         {
             activatedThreadForBar = new MyThread(updateProgressBar);
@@ -31,6 +35,7 @@ namespace LabCSharp1
             
         }
 
+        // Update the progress bar value from the thread
         public void updateProgressBar(int value)
         {
             if (bar.InvokeRequired)
@@ -43,6 +48,7 @@ namespace LabCSharp1
             }
         }
 
+        // Update the mover position from the thread
         public void updateMoverPosition()
         {
             Random rand = new Random();
@@ -61,14 +67,15 @@ namespace LabCSharp1
                 mover.Location = new Point(rand.Next(0, 800), rand.Next(0, 600));
             }
         }
-        public ProgressBar getBar { get { return this.bar; } }
-        public Label getMover { get { return this.mover; } }
+
+        // On stop abort the thread
         private void stop_Click(object sender, EventArgs e)
         {
             activatedThreadForBar?.Abort();
             activatedThreadForText?.Abort();
         }
 
+        // On form closing abort the thread
         private void backgroundColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -82,6 +89,9 @@ namespace LabCSharp1
             }
         }
 
+        // On font color button click,
+        // show a color dialog
+        // and set the mover's font color
         private void fontColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();

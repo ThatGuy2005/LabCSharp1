@@ -39,6 +39,8 @@ namespace LabCSharp1
             });
             myThread.Start();
         }
+        // Consturct the thread with a callback
+        // to update the progress bar or the mover position
         public MyThread(Action updateMover)
         {
             this.updateMoverPosition = updateMover;
@@ -51,7 +53,8 @@ namespace LabCSharp1
             myThread = new Thread(runBarCallback);
             myThread.Start();
         }
-
+        // Use the reference to the Form1 instance
+        // to update the mover position
         private void runText()
         {
             while (true)
@@ -60,7 +63,8 @@ namespace LabCSharp1
                 System.Threading.Thread.Sleep(100);
             }
         }
-
+        // Use the reference to the
+        // Form1 instance to update the progress bar value
         private void runBar()
         {
             for (int i = 0; i <= 100; i++)
@@ -69,6 +73,7 @@ namespace LabCSharp1
                 System.Threading.Thread.Sleep(50);
             }
         }
+        // Use the callback to update the progress bar value
         private void runBarCallback()
         {
             for (int i = 0; i <= 100; i++)
@@ -78,6 +83,7 @@ namespace LabCSharp1
             }
         }
 
+        // Use the callback to update the mover position
         private void runTextCallback()
         {
             while (true)
@@ -86,6 +92,8 @@ namespace LabCSharp1
                 System.Threading.Thread.Sleep(100);
             }
         }
+
+        // Delegate the abort method to the thread
         public void Abort()
         {
             myThread.Abort();
